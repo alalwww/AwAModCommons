@@ -56,7 +56,7 @@ public abstract class Version
     public final String mcClientVersion;
     public final String mcServerVersion;
 
-    public final String version;
+    public final String versionString;
 
     /**
      * set mod id and version.properties.
@@ -73,12 +73,12 @@ public abstract class Version
         mcClientVersion = prop.getProperty(pref + ".version.client");
         mcServerVersion = prop.getProperty(pref + ".version.server");
 
-        version = String.format("%s.%s.%s #%s", major, minor, build, revision);
+        versionString = String.format("%s.%s.%s #%s", major, minor, build, revision);
     }
 
     protected Version()
     {
-        version = "RML IS NON-SUPPORTED!!";
+        versionString = "RML IS NON-SUPPORTED!!";
 
         major = null;
         minor = null;
@@ -87,5 +87,11 @@ public abstract class Version
         githash = null;
         mcClientVersion = null;
         mcServerVersion = null;
+    }
+
+    @Override
+    public String toString()
+    {
+        return versionString;
     }
 }
