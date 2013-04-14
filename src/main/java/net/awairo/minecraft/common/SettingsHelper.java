@@ -222,10 +222,11 @@ public class SettingsHelper
      */
     private static void createNewFile(File file) throws IOException
     {
-        checkArgument(file.isFile(), "not a file. :" + file.getAbsolutePath());
-
         if (file.exists())
+        {
+            checkArgument(file.isFile(), "not a file. :" + file.getAbsolutePath());
             return;
+        }
 
         if (file.createNewFile())
         {
