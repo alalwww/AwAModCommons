@@ -1,9 +1,3 @@
-.settings
-.checkstyle
-.pydevproject
-*.zip
-/*.jpage
-/bin
-/src/mcmod.info
-/src/version.properties
-version.properties
+.settings/
+*.jpage
+bin/
