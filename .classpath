@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Minecraft"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="var" path="JSR305_ANNOTATIONS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Minecraft_FML"/>
+	<classpathentry kind="lib" path="/Minecraft_FML/lib/argo-3.2-src.jar" sourcepath="/Minecraft_FML/lib/argo-3.2-src.jar"/>
+	<classpathentry kind="lib" path="/Minecraft_FML/lib/asm-debug-all-4.1.jar"/>
+	<classpathentry kind="lib" path="/Minecraft_FML/lib/bcprov-debug-jdk15on-148.jar" sourcepath="/Minecraft_FML/lib/bcprov-jdk15on-148-src.zip"/>
+	<classpathentry kind="lib" path="/Minecraft_FML/lib/guava-14.0-rc3.jar" sourcepath="/Minecraft_FML/lib/guava-14.0-rc3-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
