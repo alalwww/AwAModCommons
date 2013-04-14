@@ -25,30 +25,71 @@ import javax.annotation.Nonnull;
 public class Env
 {
     @Nonnull
-    private static String rootPackageName = "net.awairo";
-    private static boolean debug = isEnable(rootPackageName + ".develop");
-    private static boolean develop = isEnable(rootPackageName + ".debug");
+    private static final Env INSTANCE;
+    private static final boolean DEVELOP;
 
+    static
+    {
+        INSTANCE = new Env("net.awairo");
+        DEVELOP = isEnable(INSTANCE.packageName + ".develop");
+    }
+
+    protected final String packageName;
+    private boolean debug;
+    private boolean trace;
+
+    /**
+     * Constructor.
+     * 
+     * @param packageName
+     *            ルートパッケージ名
+     */
+    public Env(@Nonnull String packageName)
+    {
+        this.packageName = checkArgNotNull(packageName);
+        debug = isEnable(packageName + ".debug");
+        trace = isEnable(packageName + ".trace");
+    }
+
+    /**
+     * ルートパッケージ名取得.
+     * 
+     * @return ルートパッケージ名
+     */
     @Nonnull
     public static String rootPackageName()
     {
-        return toNonnull(rootPackageName);
+        return INSTANCE.packageName;
     }
 
-    /** net.awairo global debug mode. */
-    public static boolean debug()
-    {
-        return debug;
-    }
-
-    /** development workspace. */
+    /**
+     * 開発環境判定用フラグ値取得.
+     * 
+     * @return 開発環境判定フラグ値
+     */
     public static boolean develop()
     {
-        return develop;
+        return DEVELOP;
     }
 
-    private Env()
+    /**
+     * 共通デバッグフラグ値取得.
+     * 
+     * @return 共通デバッグフラグ値
+     */
+    public static boolean debug()
     {
+        return INSTANCE.debug;
+    }
+
+    /**
+     * 共通トレースフラグ値取得.
+     * 
+     * @return 開発環境判定フラグ値
+     */
+    public static boolean trace()
+    {
+        return INSTANCE.trace;
     }
 
     /**
@@ -60,7 +101,7 @@ public class Env
      */
     public static boolean isEnable(@Nonnull String key)
     {
-        return getProperty(key).toLowerCase().equals(Boolean.TRUE.toString());
+        return Boolean.valueOf(getProperty(key));
     }
 
     /**
@@ -75,5 +116,36 @@ public class Env
     {
         String value = System.getProperty(checkArgNotNull(key));
         return value != null ? value : "";
+    }
+
+    /**
+     * MODのパッケージ名を取得.
+     * 
+     * @return パッケージ名
+     */
+    @Nonnull
+    public String getPackageName()
+    {
+        return packageName;
+    }
+
+    /**
+     * MODのデバッグフラグ値取得.
+     * 
+     * @return デバッグフラグ
+     */
+    public boolean isDebugEnabled()
+    {
+        return debug;
+    }
+
+    /**
+     * MODのトレースフラグ値取得.
+     * 
+     * @return トレースフラグ
+     */
+    public boolean isTraceEnabled()
+    {
+        return trace;
     }
 }

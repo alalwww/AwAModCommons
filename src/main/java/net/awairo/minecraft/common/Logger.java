@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.Mod;
@@ -52,6 +53,12 @@ public class Logger
     /** mod id. */
     @Nonnull
     protected final String modId;
+
+    /** mod trace enabled. */
+    public boolean modTraceEnabled;
+
+    /** mod debug enabled. */
+    public boolean modDebugEnabled;
 
     static
     {
@@ -86,10 +93,10 @@ public class Logger
     {
         Mod mod = modClass.getAnnotation(Mod.class);
 
-        if (mod == null || mod.modid() == null || mod.name() == null)
+        if (mod == null || Strings.isNullOrEmpty(mod.modid()))
             throw new IllegalArgumentException();
 
-        return getLogger(toNonnull(mod.modid()));
+        return getLogger(mod.modid());
     }
 
     /**
@@ -141,9 +148,12 @@ public class Logger
     protected Logger(@Nonnull String modId)
     {
         this.modId = modId;
+        modTraceEnabled = Env.isEnable(modId + ".trace");
+        modDebugEnabled = Env.isEnable(modId + ".debug");
         logger = createNewLogger();
         initLogLevel();
         addPublishedLogger(this);
+        info("create logger. LEVEL=%s", modId, getLogLevel(logger));
     }
 
     /**
@@ -167,7 +177,7 @@ public class Logger
     @Nonnull
     protected java.util.logging.Logger createNewLogger()
     {
-        java.util.logging.Logger newLogger = toNonnull(java.util.logging.Logger.getLogger(modId));
+        java.util.logging.Logger newLogger = java.util.logging.Logger.getLogger(modId);
         newLogger.setUseParentHandlers(false);
 
         if (!Env.develop())
@@ -252,7 +262,7 @@ public class Logger
      */
     public final boolean isTraceEnabled()
     {
-        return isDebugEnabled() && Env.isEnable(modId + ".trace");
+        return isDebugEnabled() && modTraceEnabled;
     }
 
     /**
@@ -262,7 +272,7 @@ public class Logger
      */
     public final boolean isDebugEnabled()
     {
-        return Env.debug() || Env.isEnable(modId + ".debug");
+        return Env.debug() || modDebugEnabled;
     }
 
     /**
