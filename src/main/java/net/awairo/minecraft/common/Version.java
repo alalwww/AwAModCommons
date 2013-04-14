@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
  * Version class.
  * 
  * @author alalwww
- * @version 1.0.0
+ * @version 2.0
  */
-public abstract class VersionBase
+public final class Version
 {
     /** majro version. */
     @Nonnull
@@ -58,35 +58,34 @@ public abstract class VersionBase
     /**
      * set mod id and version.properties.
      */
-    protected VersionBase(@Nonnull String modId, @Nonnull Properties prop)
+    public Version(@Nonnull String modId, Properties versionProperties)
     {
         checkArgNotNull(modId);
-        checkArgNotNull(prop);
 
-        major = toNonnull(prop.getProperty(modId + ".version.major"));
-        minor = toNonnull(prop.getProperty(modId + ".version.minor"));
-        build = toNonnull(prop.getProperty(modId + ".version.build"));
-        revision = toNonnull(prop.getProperty(modId + ".version.revision"));
+        if (Env.develop())
+        {
+            major = "";
+            minor = "";
+            build = "";
+            revision = "";
+            githash = "";
+            mcClientVersion = "";
+            mcServerVersion = "";
+            versionString = "develop";
+            return;
+        }
 
-        githash = toNonnull(prop.getProperty(modId + ".version.githash"));
+        major = versionProperties.getProperty(modId + ".version.major");
+        minor = versionProperties.getProperty(modId + ".version.minor");
+        build = versionProperties.getProperty(modId + ".version.build");
+        revision = versionProperties.getProperty(modId + ".version.revision");
 
-        mcClientVersion = toNonnull(prop.getProperty(modId + ".version.client"));
-        mcServerVersion = toNonnull(prop.getProperty(modId + ".version.server"));
+        githash = versionProperties.getProperty(modId + ".version.githash");
 
-        versionString = toNonnull(String.format("%s.%s.%s #%s", major, minor, build, revision));
-    }
+        mcClientVersion = versionProperties.getProperty(modId + ".version.client");
+        mcServerVersion = versionProperties.getProperty(modId + ".version.server");
 
-    protected VersionBase()
-    {
-        versionString = "RML IS NON-SUPPORTED!!";
-
-        major = "";
-        minor = "";
-        build = "";
-        revision = "";
-        githash = "";
-        mcClientVersion = "";
-        mcServerVersion = "";
+        versionString = String.format("%s.%s.%s #%s", major, minor, build, revision);
     }
 
     @Override
