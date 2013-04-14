@@ -44,7 +44,7 @@ public class Env
      * @param packageName
      *            ルートパッケージ名
      */
-    protected Env(@Nonnull String packageName)
+    public Env(@Nonnull String packageName)
     {
         this.packageName = checkArgNotNull(packageName);
         debug = isEnable(packageName + ".debug");
