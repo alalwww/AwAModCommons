@@ -16,7 +16,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
 /**
- * xxx.
+ * デバッグログのコンソール出力ハンドラ.
  * 
  * @author alalwww
  * 
@@ -29,14 +29,14 @@ public class DebugConsoleHandler extends StreamHandler
     }
 
     @Override
-    public void publish(LogRecord record)
+    public synchronized void publish(LogRecord record)
     {
         super.publish(record);
         flush();
     }
 
     @Override
-    public void close()
+    public synchronized void close()
     {
         flush();
     }
