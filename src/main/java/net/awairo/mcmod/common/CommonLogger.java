@@ -11,9 +11,9 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.minecraft.common;
+package net.awairo.mcmod.common;
 
-import static net.awairo.minecraft.common.PreconditionUtils.*;
+import static net.awairo.mcmod.common.PreconditionUtils.*;
 
 import java.util.logging.Level;
 
