@@ -3,18 +3,24 @@
 """
 version.properties ファイルにバージョン情報を書き出します.
 
- The MIT License (MIT)
- Copyright (c) 2013 alalwww
+ (c) 2013 alalwww
+ https://github.com/alalwww
 
- git リポジトリの Tag から mod のバージョン、MCP の commands から MC Pやクライアントのバージョンを取得しています。
+ This mod is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL.
+ Please check the contents of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt
+
+ この MOD は、Minecraft Mod Public License (MMPL) 1.0 の条件のもとに配布されています。
+ ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
+
+ git describe から mod のバージョン、MCP の commands から MCP やクライアントのバージョンを取得しています。
 
  iron chest を色々パｋ…参考にさせて頂きました。
  https://github.com/cpw/ironchest
 
 """
-__author__  = "alalwww <alalwww@awairo.net>"
-__version__ = "1.0.0"
-__date__    = "27 Feb 2013"
+__author__  = "alalwww"
+__version__ = "1.1.0"
+__date__    = "05 May 2013"
 
 import sys
 import os
@@ -25,9 +31,6 @@ import subprocess
 import shlex
 import datetime
 
-# constants
-version_properties_filename = "version.properties"
-
 cmd_describe = "git describe --long"
 pattern_gittag = "v(\d+).(\d+)-(\d+)-(g.*)"
 dummy_version_string = "v1.0-0-deadbeef"
@@ -35,10 +38,13 @@ dummy_version_string = "v1.0-0-deadbeef"
 pattern_mcp_commands_fullversion = "[.\w]+ \(data: ([.\w]+), client: ([.\w.]+), server: ([.\w.]+)\)"
 
 # args
-mcp_home = sys.argv[1]
-mod_name = sys.argv[2]
+mod_id = sys.argv[1]
+mod_rev_number = sys.argv[2]
 fml_build_number = sys.argv[3]
-mod_rev_number = sys.argv[4]
+mcp_home = sys.argv[4]
+version_properties_filename = sys.argv[5]
+
+print("args: %s, %s, %s, %s, %s" % (mod_id, mod_rev_number, fml_build_number, mcp_home, version_properties_filename))
 
 mcp_dir = os.path.abspath(mcp_home)
 sys.path.append(mcp_dir)
@@ -78,20 +84,23 @@ def main():
         f.write("# create: " + str(datetime.datetime.now()) + "\n")
         f.write("#\n")
         f.write("###################################################\n")
-        f.write("%s=%s\n" % (mod_name + ".version.major", major))
-        f.write("%s=%s\n" % (mod_name + ".version.minor", minor))
-        f.write("%s=%s\n" % (mod_name + ".version.build", build))
-        f.write("%s=%s\n" % (mod_name + ".version.revision", mod_rev_number))
-        f.write("%s=%s\n" % (mod_name + ".version.githash", githash))
+        f.write("%s=%s\n" % (mod_id + ".version", "%s.%s.%s.%s" % (major, minor, build, mod_rev_number)))
+        f.write("%s=%s\n" % (mod_id + ".version.major", major))
+        f.write("%s=%s\n" % (mod_id + ".version.minor", minor))
+        f.write("%s=%s\n" % (mod_id + ".version.build", build))
+        f.write("%s=%s\n" % (mod_id + ".version.revision", mod_rev_number))
+        f.write("%s=%s\n" % (mod_id + ".version.githash", githash))
         f.write("\n")
-        f.write("%s=%s\n" % (mod_name + ".minecraft.version.client", mcversion))
-        f.write("%s=%s\n" % (mod_name + ".minecraft.version.server", mcserverversion))
-        f.write("%s=%s\n" % (mod_name + ".mcp.version", mcpversion))
-        f.write("%s=%s\n" % (mod_name + ".fml.build.number", fml_build_number))
+        f.write("%s=%s\n" % ("mod.version", "%s.%s.%s.%s" % (major, minor, build, mod_rev_number)))
+        f.write("%s=%s\n" % ("mcmod.info.version", "%s.%s.%s #%s" % (major, minor, build, mod_rev_number)))
+        f.write("%s=%s\n" % ("minecraft.version", mcversion))
+        f.write("%s=%s\n" % ("mcp.version", mcpversion))
+        f.write("%s=%s\n" % ("fml.build.number", fml_build_number))
 
         f.write("#[EOF]")
 
-    print("Version information: " + mod_name + " %s.%s.%s #%s using MCP %s for Minecraft %s" % (major, minor, build, mod_rev_number, mcpversion, mcversion))
+    print(" \n")
+    print("Version information: " + mod_id + " %s.%s.%s #%s using MCP %s for Minecraft %s" % (major, minor, build, mod_rev_number, mcpversion, mcversion))
 
 if __name__ == '__main__':
     main()
