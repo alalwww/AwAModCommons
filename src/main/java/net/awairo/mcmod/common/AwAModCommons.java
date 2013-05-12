@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
  * 
  * @author alalwww
  */
-@Mod(modid = "awairo.common", certificateFingerprint = "26e70d58815b73cd7c6c865fe091672f79070a35")
+@Mod(modid = "awairo.commons", certificateFingerprint = "26e70d58815b73cd7c6c865fe091672f79070a35")
 public class AwAModCommons implements IAwAMod
 {
     @FingerprintWarning
