@@ -1,3 +1,6 @@
 .settings/
-*.jpage
 bin/
+src/main/assets/mcmod.info
+src/main/assets/version.properties
+.modrevision
+*.jpage
