@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 /**
  * 共通処理用ロガー.
- *
+ * 
  * @author alalwww
  */
 final class CommonLogger extends Logger
@@ -38,7 +38,7 @@ final class CommonLogger extends Logger
      */
     private CommonLogger()
     {
-        super("net.awairo.common");
+        super(Env.INSTANCE);
     }
 
     /**

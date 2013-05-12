@@ -24,10 +24,7 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-
-import cpw.mods.fml.common.Mod;
 
 /**
  * ロガー.
@@ -54,11 +51,8 @@ public class Logger
     @Nonnull
     protected final String modId;
 
-    /** mod trace enabled. */
-    public boolean modTraceEnabled;
-
-    /** mod debug enabled. */
-    public boolean modDebugEnabled;
+    /** modの環境情報. */
+    public final Env modEnv;
 
     static
     {
@@ -82,45 +76,23 @@ public class Logger
         }
     }
 
-    /**
-     * ロガー取得.
-     *
-     * @param modClass
-     *            {@link Mod} アノテーションで修飾されたMODクラス
-     * @return ロガー
-     */
-    public static Logger getLogger(@Nonnull Class<?> modClass)
+    public static Logger getLogger(@Nonnull IAwAMod modInstance)
     {
-        final Mod mod = modClass.getAnnotation(Mod.class);
-
-        if (mod == null || Strings.isNullOrEmpty(mod.modid()))
-            throw new IllegalArgumentException();
-
-        return getLogger(mod.modid());
-    }
-
-    /**
-     * ロガー取得.
-     *
-     * @param modId
-     *            MOD ID
-     * @return ロガー
-     */
-    public static Logger getLogger(@Nonnull String modId)
-    {
-        Logger logger = PUBLISHED_LOGGERS.get(modId);
+        final Env modEnv = modInstance.getEnv();
+        final String modid = modEnv.getModId();
+        Logger logger = PUBLISHED_LOGGERS.get(modid);
 
         if (logger != null)
             return logger;
 
         synchronized (Logger.class)
         {
-            logger = PUBLISHED_LOGGERS.get(modId);
+            logger = PUBLISHED_LOGGERS.get(modid);
 
             if (logger != null)
                 return logger;
 
-            return new Logger(modId);
+            return new Logger(modEnv);
         }
     }
 
@@ -139,17 +111,14 @@ public class Logger
 
     /**
      * Constructor.
-     *
-     * @param modId
+     * 
+     * @param modid
      *            mod id
-     * @param modName
-     *            mod name
      */
-    protected Logger(@Nonnull String modId)
+    protected Logger(@Nonnull Env modEnv)
     {
-        this.modId = modId;
-        modTraceEnabled = Env.isEnable(modId + ".trace");
-        modDebugEnabled = Env.isEnable(modId + ".debug");
+        this.modEnv = modEnv;
+        this.modId = modEnv.getModId();
         logger = createNewLogger();
         initLogLevel();
         addPublishedLogger(this);
@@ -262,7 +231,7 @@ public class Logger
      */
     public final boolean isTraceEnabled()
     {
-        return isDebugEnabled() && modTraceEnabled;
+        return isDebugEnabled() && modEnv.isTraceEnabled();
     }
 
     /**
@@ -272,7 +241,7 @@ public class Logger
      */
     public final boolean isDebugEnabled()
     {
-        return Env.debug() || modDebugEnabled;
+        return Env.debug() || modEnv.isDebugEnabled();
     }
 
     /**
