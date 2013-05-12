@@ -76,9 +76,8 @@ public class Logger
         }
     }
 
-    public static Logger getLogger(@Nonnull IAwAMod modInstance)
+    public static Logger getLogger(@Nonnull Env modEnv)
     {
-        final Env modEnv = modInstance.getEnv();
         final String modid = modEnv.getModId();
         Logger logger = PUBLISHED_LOGGERS.get(modid);
 
