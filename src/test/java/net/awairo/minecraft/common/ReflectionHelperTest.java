@@ -48,7 +48,7 @@ public class ReflectionHelperTest
     @Test
     public void testGetFieldValueClassOfQsuperEEInt()
     {
-        TestClass test = new TestClass();
+        final TestClass test = new TestClass();
 
         String value = ReflectionHelper.getFieldValue(TestClass.class, test, 0);
         assertThat(value, is(test.field1));
@@ -84,7 +84,7 @@ public class ReflectionHelperTest
     @Test
     public void testGetMethod()
     {
-        Method method = ReflectionHelper.getMethod(TestClass.class, "testTargetMethodName");
+        final Method method = ReflectionHelper.getMethod(TestClass.class, "testTargetMethodName");
         assertThat(method.getName(), is("testTargetMethodName"));
     }
 
@@ -95,8 +95,8 @@ public class ReflectionHelperTest
     @Test
     public void testInvoke()
     {
-        TestClass test = new TestClass();
-        Method method = ReflectionHelper.getMethod(TestClass.class, "testTargetMethodName");
+        final TestClass test = new TestClass();
+        final Method method = ReflectionHelper.getMethod(TestClass.class, "testTargetMethodName");
         assertThat((String) ReflectionHelper.invoke(method, test), is(test.testTargetMethodName()));
     }
 

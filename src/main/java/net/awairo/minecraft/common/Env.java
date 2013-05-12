@@ -114,7 +114,7 @@ public class Env
     @Nonnull
     public static String getProperty(@Nonnull String key)
     {
-        String value = System.getProperty(checkArgNotNull(key));
+        final String value = System.getProperty(checkArgNotNull(key));
         return value != null ? value : "";
     }
 

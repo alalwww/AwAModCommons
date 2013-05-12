@@ -25,9 +25,9 @@ import java.util.Properties;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
-
 import com.google.common.base.Throwables;
+
+import net.minecraft.client.Minecraft;
 
 /**
  * settings helper.
@@ -100,7 +100,7 @@ public class SettingsHelper
             createNewFile(configFile);
             properties.load(new FileReader(configFile));
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             LOG.severe(e, "config load failed. (file=%s)", configFile);
             throw Throwables.propagate(e);
@@ -136,7 +136,7 @@ public class SettingsHelper
                 properties.store(writer, comments);
             }
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             LOG.severe(e, "failed to store the settings. (file=%s)", configFile);
             throw Throwables.propagate(e);
@@ -160,7 +160,7 @@ public class SettingsHelper
         checkNotNull(key);
         checkNotNull(defaultValue);
 
-        String value = properties.getProperty(key);
+        final String value = properties.getProperty(key);
 
         if (value != null)
             return toNonnull(convert(key, value, defaultValue));
@@ -207,7 +207,7 @@ public class SettingsHelper
         if (defaultValue instanceof Byte)
             return (V) Byte.valueOf(value);
 
-        String format = "cannot cast. (key=%s, value=%s, type=%s)";
+        final String format = "cannot cast. (key=%s, value=%s, type=%s)";
         LOG.severe(format, key, value, defaultValue.getClass());
         throw new IllegalArgumentException(String.format(format, key, value, defaultValue.getClass()));
     }

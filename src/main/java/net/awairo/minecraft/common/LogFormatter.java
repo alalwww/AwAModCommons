@@ -76,7 +76,7 @@ final class LogFormatter extends Formatter
         if (loggerName == null || loggerName.length() <= 0)
             return;
 
-        int index = loggerName.lastIndexOf(".");
+        final int index = loggerName.lastIndexOf(".");
         if (index >= 0)
             loggerName = loggerName.substring(index + 1);
 
@@ -88,7 +88,7 @@ final class LogFormatter extends Formatter
         if (throwable == null)
             return;
 
-        StringWriter output = new StringWriter();
+        final StringWriter output = new StringWriter();
         throwable.printStackTrace(new PrintWriter(output));
         msg.append(output.toString());
     }

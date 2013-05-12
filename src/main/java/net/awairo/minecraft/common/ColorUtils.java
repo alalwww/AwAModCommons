@@ -58,7 +58,7 @@ public class ColorUtils
     @Nonnull
     public static Integer toIntColor(byte b)
     {
-        return toNonnull(Integer.valueOf((int) b & 0xFF));
+        return toNonnull(Integer.valueOf(b & 0xFF));
     }
 
     /**
@@ -87,7 +87,7 @@ public class ColorUtils
             return null;
 
         colorString = removeHeaderChar(colorString);
-        int length = colorString.length();
+        final int length = colorString.length();
         return parseColorInternal(colorString, (length == 4 || length == 8));
     }
 
@@ -103,7 +103,7 @@ public class ColorUtils
     {
         checkArgument(isColorString(rgb));
         rgb = removeHeaderChar(checkArgNotNull(rgb));
-        int l = rgb.length();
+        final int l = rgb.length();
         checkArgument(l == 3 || l == 6);
 
         return parseColorInternal(rgb, false);
@@ -120,7 +120,7 @@ public class ColorUtils
     public static Color parseColorARGB(@Nonnull String argb)
     {
         argb = removeHeaderChar(checkArgNotNull(argb));
-        int l = argb.length();
+        final int l = argb.length();
         checkArgument(l == 4 || l == 8);
 
         return parseColorInternal(argb, true);
@@ -145,8 +145,8 @@ public class ColorUtils
     @Nonnull
     private static Color parseColorInternal(@Nonnull String colorString, boolean hasalpha)
     {
-        int loopCount = hasalpha ? 4 : 3;
-        int length = colorString.length(); // 3, 4, 6 or 8
+        final int loopCount = hasalpha ? 4 : 3;
+        final int length = colorString.length(); // 3, 4, 6 or 8
         int delta;
 
         if (length == loopCount)
@@ -156,12 +156,12 @@ public class ColorUtils
         else
             throw new InternalError("unreachable code.");
 
-        int[] color = new int[loopCount];
+        final int[] color = new int[loopCount];
         int cursor = 0;
 
         for (int i = 0; i < loopCount; i++)
         {
-            int endIndex = cursor + delta;
+            final int endIndex = cursor + delta;
             String s = colorString.substring(cursor, endIndex);
             cursor = endIndex;
 
@@ -220,7 +220,7 @@ public class ColorUtils
     @Nonnull
     public static String toString(Color color, boolean hasalpha)
     {
-        StringBuilder sb = new StringBuilder(hasalpha ? 8 : 6);
+        final StringBuilder sb = new StringBuilder(hasalpha ? 8 : 6);
 
         if (hasalpha)
             sb.append(hexToString(color.getAlpha()));

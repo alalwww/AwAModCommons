@@ -43,7 +43,9 @@ public class ReflectionHelper
     /**
      * このクラスをロードしたクラスローダーからクラスを探し、クラスが存在する場合trueを返します.
      * 
-     * <p>他のModが導入済みかのチェック用。</p>
+     * <p>
+     * 他のModが導入済みかのチェック用。
+     * </p>
      * 
      * @param className
      *            FQCN
@@ -57,9 +59,9 @@ public class ReflectionHelper
             // Class.forName(className);
             return true;
         }
-        catch (ClassNotFoundException e)
+        catch (final ClassNotFoundException e)
         {
-            String pref = "net.minecraft.src.";
+            final String pref = "net.minecraft.src.";
             if (pref.length() < className.length() && className.startsWith(pref))
                 return findClass(toNonnull(className.substring(pref.length(), className.length())));
 
@@ -233,10 +235,11 @@ public class ReflectionHelper
         try
         {
             @SuppressWarnings("unchecked")
+            final
             V value = (V) field.get(instance);
             return value;
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             LOG.severe(e, "reflection failed. (field=%s, instance=%s)", field, instance);
             throw Throwables.propagate(e);
@@ -261,13 +264,14 @@ public class ReflectionHelper
         try
         {
             @SuppressWarnings("unchecked")
+            final
             R retValue = (R) method.invoke(instance, args);
             return retValue;
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
-            String f = "reflection failed. (class=%s, method=%s, instance=%s, args=%s)";
-            Object argsValue = args != null ? Arrays.toString(args) : args;
+            final String f = "reflection failed. (class=%s, method=%s, instance=%s, args=%s)";
+            final Object argsValue = args != null ? Arrays.toString(args) : args;
             LOG.severe(e, f, method.getDeclaringClass().getName(), method.getName(), instance, argsValue);
 
             throw Throwables.propagate(e);
@@ -300,7 +304,7 @@ public class ReflectionHelper
 
             throw new InternalError("unexpected target value. : " + key);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             LOG.severe(e, "reflection failed. (class=%s, key=%s)", clazz.getName(), key);
             throw Throwables.propagate(e);
@@ -314,7 +318,7 @@ public class ReflectionHelper
     private static <E> Method getPrivateMethodInternalByIndex(Class<?> clazz, int index)
             throws IndexOutOfBoundsException
     {
-        Method m = clazz.getDeclaredMethods()[index];
+        final Method m = clazz.getDeclaredMethods()[index];
         m.setAccessible(true);
         return m;
     }
@@ -326,7 +330,7 @@ public class ReflectionHelper
     private static <E> Method getPrivateMethodInternalByName(Class<?> clazz, String name)
             throws NoSuchMethodException
     {
-        Method m = clazz.getDeclaredMethod(name);
+        final Method m = clazz.getDeclaredMethod(name);
         m.setAccessible(true);
         return m;
     }
@@ -338,7 +342,7 @@ public class ReflectionHelper
     private static <E> Field getPrivateValueInternalByIndex(Class<?> clazz, int index)
             throws IllegalAccessException
     {
-        Field f = clazz.getDeclaredFields()[index];
+        final Field f = clazz.getDeclaredFields()[index];
         f.setAccessible(true);
         return f;
     }
@@ -350,7 +354,7 @@ public class ReflectionHelper
     private static <E> Field getPrivateValueInternalByName(Class<?> clazz, String name)
             throws IllegalAccessException, NoSuchFieldException
     {
-        Field f = clazz.getDeclaredField(name);
+        final Field f = clazz.getDeclaredField(name);
         f.setAccessible(true);
         return f;
     }

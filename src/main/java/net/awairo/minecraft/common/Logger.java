@@ -71,11 +71,11 @@ public class Logger
         try
         {
             Class.forName("cpw.mods.fml.relauncher.FMLRelaunchLog");
-            Field errCache = cpw.mods.fml.relauncher.FMLRelaunchLog.class.getDeclaredField("errCache");
+            final Field errCache = cpw.mods.fml.relauncher.FMLRelaunchLog.class.getDeclaredField("errCache");
             errCache.setAccessible(true);
             return (PrintStream) errCache.get(null);
         }
-        catch (Exception ignore)
+        catch (final Exception ignore)
         {
             // ignore.printStackTrace();
             return System.err;
@@ -91,7 +91,7 @@ public class Logger
      */
     public static Logger getLogger(@Nonnull Class<?> modClass)
     {
-        Mod mod = modClass.getAnnotation(Mod.class);
+        final Mod mod = modClass.getAnnotation(Mod.class);
 
         if (mod == null || Strings.isNullOrEmpty(mod.modid()))
             throw new IllegalArgumentException();
@@ -128,7 +128,7 @@ public class Logger
     {
         synchronized (Logger.class)
         {
-            Logger old = PUBLISHED_LOGGERS.put(logger.modId, logger);
+            final Logger old = PUBLISHED_LOGGERS.put(logger.modId, logger);
 
             if (old == null)
                 return logger;
@@ -164,7 +164,7 @@ public class Logger
     @Nonnull
     protected Handler createNewConsoleHandler()
     {
-        Handler handler = new DebugConsoleHandler(SYS_ERR);
+        final Handler handler = new DebugConsoleHandler(SYS_ERR);
         handler.setFormatter(new LogFormatter());
         return handler;
     }
@@ -177,7 +177,7 @@ public class Logger
     @Nonnull
     protected java.util.logging.Logger createNewLogger()
     {
-        java.util.logging.Logger newLogger = java.util.logging.Logger.getLogger(modId);
+        final java.util.logging.Logger newLogger = java.util.logging.Logger.getLogger(modId);
         newLogger.setUseParentHandlers(false);
 
         if (!Env.develop())
@@ -463,7 +463,7 @@ public class Logger
         if (!Env.develop() && !canLogging(level))
             return;
 
-        String message = (args != null && args.length > 0) ? String.format(format, args) : format;
+        final String message = (args != null && args.length > 0) ? String.format(format, args) : format;
 
         if (Env.develop() || isLesserThanInfo(level) || logger.getUseParentHandlers())
         {
@@ -510,7 +510,7 @@ public class Logger
         if (logger == null)
             return Level.INFO;
 
-        Level level = logger.getLevel();
+        final Level level = logger.getLevel();
 
         if (level == null)
             return getLogLevel(logger.getParent());
