@@ -48,6 +48,20 @@ public class ColorUtils
         HEX_PATTERN = Pattern.compile("^[0-9a-fA-F]{1,2}$");
     }
 
+    public static int toIntColor(int r, int g, int b)
+    {
+        return toIntColor(r, g, b, 0xff);
+    }
+
+    public static int toIntColor(int r, int g, int b, int a)
+    {
+        int color = b;
+        color += g << 8;
+        color += r << 16;
+        color += a << 24;
+        return color;
+    }
+
     /**
      * byte color to integer color.
      * 
