@@ -235,8 +235,7 @@ public class ReflectionHelper
         try
         {
             @SuppressWarnings("unchecked")
-            final
-            V value = (V) field.get(instance);
+            final V value = (V) field.get(instance);
             return value;
         }
         catch (final Exception e)
@@ -264,8 +263,7 @@ public class ReflectionHelper
         try
         {
             @SuppressWarnings("unchecked")
-            final
-            R retValue = (R) method.invoke(instance, args);
+            final R retValue = (R) method.invoke(instance, args);
             return retValue;
         }
         catch (final Exception e)

@@ -58,7 +58,7 @@ public class ColorUtils
     @Nonnull
     public static Integer toIntColor(byte b)
     {
-        return toNonnull(Integer.valueOf(b & 0xFF));
+        return Integer.valueOf(b & 0xFF);
     }
 
     /**
@@ -130,14 +130,10 @@ public class ColorUtils
     private static String removeHeaderChar(@Nonnull String s)
     {
         if (s.startsWith("#"))
-        {
-            return toNonnull(s.substring(1, s.length()));
-        }
+            return s.substring("#".length(), s.length());
 
         if (s.startsWith("0x"))
-        {
-            return toNonnull(s.substring(2, s.length()));
-        }
+            return s.substring("0x".length(), s.length());
 
         return s;
     }
@@ -229,7 +225,7 @@ public class ColorUtils
         sb.append(hexToString(color.getGreen()));
         sb.append(hexToString(color.getBlue()));
 
-        return toNonnull(sb.toString().toUpperCase());
+        return sb.toString().toUpperCase();
     }
 
     private static boolean isColorString(String colorString)

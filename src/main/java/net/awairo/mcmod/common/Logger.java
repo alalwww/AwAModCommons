@@ -28,7 +28,7 @@ import com.google.common.collect.Maps;
 
 /**
  * ロガー.
- *
+ * 
  * @author alalwww
  */
 public class Logger
@@ -121,12 +121,12 @@ public class Logger
         logger = createNewLogger();
         initLogLevel();
         addPublishedLogger(this);
-        info("create logger. LEVEL=%s", modId, getLogLevel(logger));
+        info("create logger. id=%s, lavel=%s", modId, getLogLevel(logger));
     }
 
     /**
      * 新しいログハンドラー生成.
-     *
+     * 
      * @return ハンドラー
      */
     @Nonnull
@@ -139,7 +139,7 @@ public class Logger
 
     /**
      * 新しいロガー生成.
-     *
+     * 
      * @return ロガー
      */
     @Nonnull
@@ -159,7 +159,7 @@ public class Logger
 
     /**
      * ログレベル初期化.
-     *
+     * 
      * @param logger
      *            ロガー
      * @param handler
@@ -184,7 +184,7 @@ public class Logger
 
     /**
      * ログレベルを設定.
-     *
+     * 
      * @param level
      *            ログレベル
      */
@@ -200,20 +200,20 @@ public class Logger
 
     /**
      * 親ログハンドラー(FMLのログハンドラー)の有効/無効を切り替えます.
-     *
+     * 
      * <p>
      * FMLのFileHandlerのログレベルは {@link Level#ALL} であり、全てのレベルのログが出力されています。
      * デバッグ用やトレース用など、通常は必要とならないような詳細情報が全て出力されてしまうことを避けるため、
      * 親ログハンドラーの使用可否を制御することで、出力されるログを制限します。
-     *
-     * プライベートメソッド {@link #log(Level, String, Throwable)} で {@link Level#INFO} 以上のみ
-     * 親ログハンドラーを有効化していますが、変更の度にログマネージャーのパーミッションチェックが走るため、
+     * 
+     * プライベートメソッド {@link #log(Level, String, Throwable)} で {@link Level#INFO}
+     * 以上のみ 親ログハンドラーを有効化していますが、変更の度にログマネージャーのパーミッションチェックが走るため、
      * 複数のログを纏めて出力する際に、事前に変更ができるように、このメソッドを公開しています。
      * </p>
      * <p>
      * 開発環境では常に専用のコンソールハンドラーを使用しているため、このメソッドは何も行いません。
      * </p>
-     *
+     * 
      * @param useParentHandlers
      *            親ログハンドラーを有効にする場合 true
      */
@@ -225,7 +225,7 @@ public class Logger
 
     /**
      * トレースログを出力するか判定.
-     *
+     * 
      * @return デバッグとトレースが有効の場合 true
      */
     public final boolean isTraceEnabled()
@@ -235,7 +235,7 @@ public class Logger
 
     /**
      * デバッグログを出力するか判定.
-     *
+     * 
      * @return デバッグが有効の場合 true
      */
     public final boolean isDebugEnabled()
@@ -245,7 +245,7 @@ public class Logger
 
     /**
      * 指定のログレベルが INFO 未満か判定します.
-     *
+     * 
      * @param level
      *            ログレベル
      * @return INFO未満のログレベルの場合true
@@ -258,20 +258,20 @@ public class Logger
 
     /**
      * エラーログ.
-     *
+     * 
      * @param format
      *            メッセージフォーマット
      * @param args
      *            メッセージ引数
      */
-    public void severe(@Nonnull String format, Object... args)
+    public void severe(String format, Object... args)
     {
         log(Level.SEVERE, format, args);
     }
 
     /**
      * エラーログ.
-     *
+     * 
      * @param e
      *            例外またはエラー
      * @param format
@@ -286,20 +286,20 @@ public class Logger
 
     /**
      * 警告ログ.
-     *
+     * 
      * @param format
      *            メッセージフォーマット
      * @param args
      *            メッセージ引数
      */
-    public void warning(@Nonnull String format, Object... args)
+    public void warning(String format, Object... args)
     {
         log(Level.WARNING, format, args);
     }
 
     /**
      * 警告ログ.
-     *
+     * 
      * @param e
      *            例外またはエラー
      * @param format
@@ -314,20 +314,20 @@ public class Logger
 
     /**
      * 情報ログ.
-     *
+     * 
      * @param format
      *            メッセージフォーマット
      * @param args
      *            メッセージ引数
      */
-    public void info(@Nonnull String format, Object... args)
+    public void info(String format, Object... args)
     {
         log(Level.INFO, format, args);
     }
 
     /**
      * 情報ログ.
-     *
+     * 
      * @param e
      *            例外またはエラー
      * @param format
@@ -342,20 +342,20 @@ public class Logger
 
     /**
      * デバッグログ用.
-     *
+     * 
      * @param format
      *            メッセージフォーマット
      * @param args
      *            メッセージ引数
      */
-    public void debug(@Nonnull String format, Object... args)
+    public void debug(String format, Object... args)
     {
         log(Level.FINE, format, args);
     }
 
     /**
      * デバッグログ用.
-     *
+     * 
      * @param e
      *            例外またはエラー
      * @param format
@@ -370,20 +370,20 @@ public class Logger
 
     /**
      * 頻度が高いログ出力用.
-     *
+     * 
      * @param format
      *            メッセージフォーマット
      * @param args
      *            メッセージ引数
      */
-    public void trace(@Nonnull String format, Object... args)
+    public void trace(String format, Object... args)
     {
         log(Level.FINEST, format, args);
     }
 
     /**
      * 頻度が高いログ出力用.
-     *
+     * 
      * @param e
      *            例外またはエラー
      * @param format
@@ -398,7 +398,7 @@ public class Logger
 
     /**
      * ログレベルを指定してログ出力.
-     *
+     * 
      * @param level
      *            ログレベル
      * @param format
@@ -413,7 +413,7 @@ public class Logger
 
     /**
      * ログレベルを指定してログ出力.
-     *
+     * 
      * @param level
      *            ログレベル
      * @param throwable
@@ -456,7 +456,7 @@ public class Logger
 
     /**
      * ロギング可能なレベルか判定します.
-     *
+     * 
      * @param level
      *            レベル
      * @return 現在のロガーのレベルよりも高い場合 true
@@ -468,7 +468,7 @@ public class Logger
 
     /**
      * 親ロガーを再帰的に遡り、ログレベルを取得します.
-     *
+     * 
      * @param logger
      *            ロガー
      * @return ログレベル

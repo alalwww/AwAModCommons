@@ -25,7 +25,7 @@ import com.google.common.base.Strings;
 
 /**
  * ログフォーマッター.
- *
+ * 
  * @author alalwww
  */
 final class LogFormatter extends Formatter

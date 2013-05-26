@@ -17,6 +17,8 @@ import static net.awairo.mcmod.common.PreconditionUtils.*;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Strings;
+
 /**
  * このModに紐づく環境の情報.
  * 
@@ -119,8 +121,7 @@ public class Env
     @Nonnull
     public static String getProperty(@Nonnull String key)
     {
-        final String value = System.getProperty(checkArgNotNull(key));
-        return value != null ? value : "";
+        return Strings.nullToEmpty(System.getProperty(checkArgNotNull(key)));
     }
 
     /**

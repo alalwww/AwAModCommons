@@ -31,7 +31,7 @@ import net.minecraft.client.Minecraft;
 
 /**
  * settings helper.
- *
+ * 
  * @author alalwww
  */
 public class SettingsHelper
@@ -46,7 +46,7 @@ public class SettingsHelper
 
     /**
      * get "%appdata%\.minecraft\config" directory.
-     *
+     * 
      * @return config directory
      */
     @Nonnull
@@ -84,7 +84,7 @@ public class SettingsHelper
 
     /**
      * load configure file to properties.
-     *
+     * 
      * @param properties
      *            properties
      * @param configFile
@@ -109,14 +109,14 @@ public class SettingsHelper
 
     /**
      * store properties to configure file.
-     *
+     * 
      * @param properties
      *            properties
      * @param configFile
      *            configure file
      * @param comments
      *            comments
-     *
+     * 
      * @throws RuntimeException
      *             It's so bug ridden.
      */
@@ -131,7 +131,8 @@ public class SettingsHelper
             createNewFile(configFile);
             checkState(configFile.canWrite(), "could not write the file." + configFile.getAbsolutePath());
 
-            try (FileWriter writer = new FileWriter(configFile))
+            try (
+                FileWriter writer = new FileWriter(configFile))
             {
                 properties.store(writer, comments);
             }
@@ -145,7 +146,7 @@ public class SettingsHelper
 
     /**
      * get value and cast.
-     *
+     * 
      * @param properties
      *            properties
      * @param key
@@ -171,7 +172,7 @@ public class SettingsHelper
 
     /**
      * デフォルト値の型に変換します.
-     *
+     * 
      * @param key
      *            ログ用のプロパティキー
      * @param value
@@ -214,7 +215,7 @@ public class SettingsHelper
 
     /**
      * ファイルが無ければ新しいファイルを生成します.
-     *
+     * 
      * @param file
      *            ファイル
      * @throws IOException

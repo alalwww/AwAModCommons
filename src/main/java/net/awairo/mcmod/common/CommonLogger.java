@@ -13,7 +13,7 @@
 
 package net.awairo.mcmod.common;
 
-import static net.awairo.mcmod.common.PreconditionUtils.*;
+import static com.google.common.base.Preconditions.*;
 
 import java.util.logging.Level;
 
@@ -39,6 +39,9 @@ final class CommonLogger extends Logger
     private CommonLogger()
     {
         super(Env.INSTANCE);
+
+        if (Env.develop())
+            setLevel(Level.FINER);
     }
 
     /**
@@ -49,12 +52,12 @@ final class CommonLogger extends Logger
     @Nonnull
     static Logger getLogger()
     {
-        return toNonnull(INSTANCE);
+        return INSTANCE;
     }
 
     @Override
-    public void debug(@Nonnull String format, Object... args)
+    public void debug(String format, Object... args)
     {
-        log(Level.FINER, format, args);
+        log(Level.FINER, checkNotNull(format), args);
     }
 }

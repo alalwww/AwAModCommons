@@ -13,7 +13,13 @@ package net.awairo.mcmod.common;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.FingerprintWarning;
+import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * 共通処理のmodクラス.
@@ -27,8 +33,28 @@ import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
 @Mod(modid = "awairo.commons", certificateFingerprint = "26e70d58815b73cd7c6c865fe091672f79070a35")
 public class AwAModCommons implements IAwAMod
 {
+    private final Logger log = CommonLogger.getLogger();
+
+    @PreInit
+    protected void preInit(FMLPreInitializationEvent event)
+    {
+        log.debug("pre initialize");
+    }
+
+    @Init
+    protected void init(FMLInitializationEvent event)
+    {
+        log.debug("initialize");
+    }
+
+    @PostInit
+    protected void preInit(FMLPostInitializationEvent event)
+    {
+        log.debug("post initialize");
+    }
+
     @FingerprintWarning
-    public void handleViolationEvent(FMLFingerprintViolationEvent event)
+    protected void handleViolationEvent(FMLFingerprintViolationEvent event)
     {
         CommonLogic.handleViolationEvent(this, event);
     }
