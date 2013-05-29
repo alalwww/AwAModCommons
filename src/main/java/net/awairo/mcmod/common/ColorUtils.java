@@ -14,7 +14,6 @@
 package net.awairo.mcmod.common;
 
 import static com.google.common.base.Preconditions.*;
-import static net.awairo.mcmod.common.PreconditionUtils.*;
 
 import java.awt.Color;
 import java.util.regex.Pattern;
@@ -116,7 +115,7 @@ public class ColorUtils
     public static Color parseColorRGB(@Nonnull String rgb)
     {
         checkArgument(isColorString(rgb));
-        rgb = removeHeaderChar(checkArgNotNull(rgb));
+        rgb = removeHeaderChar(checkNotNull(rgb, "Argument 'rgb' must not be null."));
         final int l = rgb.length();
         checkArgument(l == 3 || l == 6);
 
@@ -133,7 +132,7 @@ public class ColorUtils
     @Nullable
     public static Color parseColorARGB(@Nonnull String argb)
     {
-        argb = removeHeaderChar(checkArgNotNull(argb));
+        argb = removeHeaderChar(checkNotNull(argb, "Argument 'argb' must not be null."));
         final int l = argb.length();
         checkArgument(l == 4 || l == 8);
 

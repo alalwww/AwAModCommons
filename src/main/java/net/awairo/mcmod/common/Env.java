@@ -13,7 +13,7 @@
 
 package net.awairo.mcmod.common;
 
-import static net.awairo.mcmod.common.PreconditionUtils.*;
+import static com.google.common.base.Preconditions.*;
 
 import javax.annotation.Nonnull;
 
@@ -63,8 +63,8 @@ public class Env
      */
     private Env(@Nonnull String rootPackageName, @Nonnull String modid)
     {
-        this.packageName = checkArgNotNull(rootPackageName);
-        this.modid = checkArgNotNull(modid);
+        this.packageName = checkNotNull(rootPackageName, "Argument 'rootPackageName' must not be null.");
+        this.modid = checkNotNull(modid, "Argument 'modid' must not be null.");
         debug = isEnabled(rootPackageName + ".debug");
         trace = isEnabled(rootPackageName + ".trace");
     }
@@ -121,7 +121,7 @@ public class Env
     @Nonnull
     public static String getProperty(@Nonnull String key)
     {
-        return Strings.nullToEmpty(System.getProperty(checkArgNotNull(key)));
+        return Strings.nullToEmpty(System.getProperty(checkNotNull(key, "Argument 'key' must not be null.")));
     }
 
     /**
@@ -219,6 +219,6 @@ public class Env
      */
     public String getPropertyKey(@Nonnull String property)
     {
-        return packageName + "." + checkArgNotNull(property);
+        return packageName + "." + checkNotNull(property, "Argument 'property' must not be null.");
     }
 }

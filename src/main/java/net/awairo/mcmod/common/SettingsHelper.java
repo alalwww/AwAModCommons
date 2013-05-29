@@ -14,7 +14,6 @@
 package net.awairo.mcmod.common;
 
 import static com.google.common.base.Preconditions.*;
-import static net.awairo.mcmod.common.PreconditionUtils.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -66,7 +65,7 @@ public class SettingsHelper
             {
                 // for FML
                 modConfigDirectory = cpw.mods.fml.common.Loader.instance().getConfigDir();
-                return toNonnull(modConfigDirectory);
+                return modConfigDirectory;
             }
 
             if (ReflectionHelper.findClass("net.minecraft.src.ModLoader"))
@@ -74,11 +73,11 @@ public class SettingsHelper
                 // for original ModLoader
                 modConfigDirectory = ReflectionHelper
                         .getFieldValue(net.minecraft.src.ModLoader.class, null, "cfgdir");
-                return toNonnull(modConfigDirectory);
+                return modConfigDirectory;
             }
 
             modConfigDirectory = new File(Minecraft.getMinecraftDir(), "config");
-            return toNonnull(modConfigDirectory);
+            return modConfigDirectory;
         }
     }
 
@@ -92,8 +91,8 @@ public class SettingsHelper
      */
     public static synchronized void load(@Nonnull Properties properties, @Nonnull File configFile)
     {
-        checkArgNotNull(properties);
-        checkArgNotNull(configFile);
+        checkNotNull(properties, "Argument 'properties' must not be null.");
+        checkNotNull(configFile, "Argument 'configFile' must not be null.");
 
         try
         {
@@ -123,8 +122,8 @@ public class SettingsHelper
     public static synchronized void store(@Nonnull Properties properties, @Nonnull File configFile,
             @Nullable String comments)
     {
-        checkArgNotNull(properties);
-        checkArgNotNull(configFile);
+        checkNotNull(properties, "Argument 'properties' must not be null.");
+        checkNotNull(configFile, "Argument 'configFile' must not be null.");
 
         try
         {
@@ -158,13 +157,13 @@ public class SettingsHelper
     @Nonnull
     public static <V> V getValue(@Nonnull Properties properties, @Nonnull String key, @Nonnull V defaultValue)
     {
-        checkNotNull(key);
-        checkNotNull(defaultValue);
+        checkNotNull(key, "Argument 'key' must not be null.");
+        checkNotNull(defaultValue, "Argument 'defaultValue' must not be null.");
 
         final String value = properties.getProperty(key);
 
         if (value != null)
-            return toNonnull(convert(key, value, defaultValue));
+            return convert(key, value, defaultValue);
 
         properties.setProperty(key, defaultValue.toString());
         return defaultValue;

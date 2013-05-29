@@ -14,7 +14,6 @@
 package net.awairo.mcmod.common;
 
 import static com.google.common.base.Preconditions.*;
-import static net.awairo.mcmod.common.PreconditionUtils.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -63,7 +62,7 @@ public class ReflectionHelper
         {
             final String pref = "net.minecraft.src.";
             if (pref.length() < className.length() && className.startsWith(pref))
-                return findClass(toNonnull(className.substring(pref.length(), className.length())));
+                return findClass(className.substring(pref.length(), className.length()));
 
             return false;
         }
@@ -231,7 +230,7 @@ public class ReflectionHelper
      */
     public static <V> V getValue(Field field, @Nullable Object instance)
     {
-        checkArgNotNull(field);
+        checkNotNull(field, "Argument '' must not be null.");
         try
         {
             @SuppressWarnings("unchecked")
@@ -259,7 +258,7 @@ public class ReflectionHelper
     @Nullable
     public static <R> R invoke(Method method, @Nullable Object instance, Object... args)
     {
-        checkArgNotNull(method);
+        checkNotNull(method, "Argument 'method' must not be null.");
         try
         {
             @SuppressWarnings("unchecked")
@@ -280,8 +279,8 @@ public class ReflectionHelper
     @Nonnull
     private static <T, V> T get(Type type, Class<?> clazz, V key)
     {
-        checkArgNotNull(clazz);
-        checkArgNotNull(key);
+        checkNotNull(clazz, "Argument 'clazz' must not be null.");
+        checkNotNull(key, "Argument 'key' must not be null.");
 
         try
         {
@@ -369,6 +368,8 @@ public class ReflectionHelper
     @Nonnull
     private static String convertName(String devName, String srgName)
     {
-        return Env.develop() ? checkArgNotNull(devName) : checkArgNotNull(srgName);
+        checkNotNull(devName, "Argument 'devName' must not be null.");
+        checkNotNull(srgName, "Argument 'srgName' must not be null.");
+        return Env.develop() ? devName : srgName;
     }
 }

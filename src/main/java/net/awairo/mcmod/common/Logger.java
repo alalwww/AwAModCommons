@@ -13,7 +13,7 @@
 
 package net.awairo.mcmod.common;
 
-import static net.awairo.mcmod.common.PreconditionUtils.*;
+import static com.google.common.base.Preconditions.*;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;
@@ -190,7 +190,7 @@ public class Logger
      */
     public final void setLevel(Level level)
     {
-        checkArgNotNull(level);
+        checkNotNull(level, "Argument 'level' must not be null.");
 
         logger.setLevel(level);
 
@@ -252,7 +252,7 @@ public class Logger
      */
     public final boolean isLesserThanInfo(Level level)
     {
-        checkArgNotNull(level);
+        checkNotNull(level, "Argument 'level' must not be null.");
         return level.intValue() < Level.INFO.intValue();
     }
 
@@ -425,8 +425,8 @@ public class Logger
      */
     public void log(Level level, Throwable e, @Nonnull String format, Object... args)
     {
-        checkArgNotNull(level);
-        checkArgNotNull(format);
+        checkNotNull(level, "Argument 'level' must not be null.");
+        checkNotNull(format, "Argument 'format' must not be null.");
 
         if (!Env.develop() && !canLogging(level))
             return;

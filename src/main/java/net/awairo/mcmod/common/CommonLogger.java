@@ -58,6 +58,6 @@ final class CommonLogger extends Logger
     @Override
     public void debug(String format, Object... args)
     {
-        log(Level.FINER, checkNotNull(format), args);
+        log(Level.FINER, checkNotNull(format, "Argument 'format' must not be null."), args);
     }
 }
