@@ -3,4 +3,8 @@ bin/
 src/main/assets/mcmod.info
 src/main/assets/version.properties
 .modrevision
+.checkstyle
+.pydevproject
+.classpath
+.project
 *.jpage
