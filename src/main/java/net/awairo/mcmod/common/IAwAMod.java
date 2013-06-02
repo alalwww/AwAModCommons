@@ -18,6 +18,9 @@ package net.awairo.mcmod.common;
  */
 public interface IAwAMod
 {
+    /** certificateFingerprint. */
+    public static final String FINGERPRINT = "26e70d58815b73cd7c6c865fe091672f79070a35";
+
     /**
      * modの環境設定情報を取得します.
      * 
