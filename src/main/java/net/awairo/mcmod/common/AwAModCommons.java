@@ -30,9 +30,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
  * 
  * @author alalwww
  */
-@Mod(modid = "awairo.commons", certificateFingerprint = "26e70d58815b73cd7c6c865fe091672f79070a35")
+@Mod(modid = AwAModCommons.MOD_ID, certificateFingerprint = IAwAMod.FINGERPRINT)
 public class AwAModCommons implements IAwAMod
 {
+    /** mod id. */
+    public static final String MOD_ID = "awairo.commons";
+
     private final Logger log = CommonLogger.getLogger();
 
     @PreInit
