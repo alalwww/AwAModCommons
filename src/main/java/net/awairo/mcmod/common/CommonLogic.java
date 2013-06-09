@@ -13,6 +13,7 @@ package net.awairo.mcmod.common;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
 import cpw.mods.fml.common.Mod;
@@ -20,10 +21,9 @@ import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * xxx.
+ * 汎用ロジックユーティリティ.
  * 
  * @author alalwww
- * 
  */
 public final class CommonLogic
 {
@@ -33,7 +33,7 @@ public final class CommonLogic
 
     public static void handlePreInitializeEvent(IAwAMod mod, FMLPreInitializationEvent event)
     {
-
+        // none
     }
 
     public static void handleViolationEvent(IAwAMod mod, FMLFingerprintViolationEvent event)
@@ -51,9 +51,24 @@ public final class CommonLogic
     {
         final Mod mod = modInstance.getClass().getAnnotation(Mod.class);
 
-        if (mod == null || Strings.isNullOrEmpty(mod.modid()))
+        if (isNull(mod) || Strings.isNullOrEmpty(mod.modid()))
             throw new IllegalArgumentException();
 
         return mod.modid();
+    }
+
+    public static boolean isNull(Object object)
+    {
+        return object == null;
+    }
+
+    public static boolean isNotNull(Object object)
+    {
+        return !isNull(object);
+    }
+
+    public static boolean equal(Object a, Object b)
+    {
+        return Objects.equal(a, b);
     }
 }
