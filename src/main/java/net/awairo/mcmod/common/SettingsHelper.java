@@ -88,8 +88,9 @@ public class SettingsHelper
      *            properties
      * @param configFile
      *            configure file
+     * @return properties
      */
-    public static synchronized void load(@Nonnull Properties properties, @Nonnull File configFile)
+    public static synchronized Properties load(@Nonnull Properties properties, @Nonnull File configFile)
     {
         checkNotNull(properties, "Argument 'properties' must not be null.");
         checkNotNull(configFile, "Argument 'configFile' must not be null.");
@@ -98,6 +99,8 @@ public class SettingsHelper
         {
             createNewFile(configFile);
             properties.load(new FileReader(configFile));
+
+            return properties;
         }
         catch (final Exception e)
         {
@@ -115,11 +118,12 @@ public class SettingsHelper
      *            configure file
      * @param comments
      *            comments
+     * @return properties
      * 
      * @throws RuntimeException
      *             It's so bug ridden.
      */
-    public static synchronized void store(@Nonnull Properties properties, @Nonnull File configFile,
+    public static synchronized Properties store(@Nonnull Properties properties, @Nonnull File configFile,
             @Nullable String comments)
     {
         checkNotNull(properties, "Argument 'properties' must not be null.");
@@ -135,6 +139,8 @@ public class SettingsHelper
             {
                 properties.store(writer, comments);
             }
+
+            return properties;
         }
         catch (final Exception e)
         {
