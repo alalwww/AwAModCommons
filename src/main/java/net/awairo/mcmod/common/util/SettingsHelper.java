@@ -14,6 +14,7 @@
 package net.awairo.mcmod.common.util;
 
 import static com.google.common.base.Preconditions.*;
+import static net.awairo.mcmod.common.CommonLogic.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -26,10 +27,10 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Throwables;
 
+import net.minecraft.client.Minecraft;
+
 import net.awairo.mcmod.common.CommonLogger;
 import net.awairo.mcmod.common.log.Logger;
-
-import net.minecraft.client.Minecraft;
 
 /**
  * settings helper.
@@ -52,16 +53,17 @@ public class SettingsHelper
      * @return config directory
      */
     @Nonnull
+    @Deprecated
     public static File getConfigDir()
     {
         File file = modConfigDirectory;
-        if (file != null)
+        if (isNotNull(file))
             return file;
 
         synchronized (SettingsHelper.class)
         {
             file = modConfigDirectory;
-            if (file != null)
+            if (isNotNull(file))
                 return file;
 
             if (ReflectionHelper.findClass("cpw.mods.fml.common.Loader"))
@@ -171,7 +173,7 @@ public class SettingsHelper
 
         final String value = properties.getProperty(key);
 
-        if (value != null)
+        if (isNotNull(value))
             return convert(key, value, defaultValue);
 
         properties.setProperty(key, defaultValue.toString());

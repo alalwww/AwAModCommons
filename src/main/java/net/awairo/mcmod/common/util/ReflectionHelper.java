@@ -59,10 +59,9 @@ public class ReflectionHelper
         try
         {
             Class.forName(className, false, ReflectionHelper.class.getClassLoader());
-            // Class.forName(className);
             return true;
         }
-        catch (final ClassNotFoundException e)
+        catch (final ClassNotFoundException ignore)
         {
             final String pref = "net.minecraft.src.";
             if (pref.length() < className.length() && className.startsWith(pref))

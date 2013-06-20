@@ -14,6 +14,7 @@
 package net.awairo.mcmod.common.util;
 
 import static com.google.common.base.Preconditions.*;
+import static net.awairo.mcmod.common.CommonLogic.*;
 
 import java.awt.Color;
 import java.util.regex.Pattern;
@@ -44,17 +45,48 @@ public class ColorUtils
     private static final Pattern COLOR_PATTERN;
     private static final Pattern HEX_PATTERN;
 
+    private static final int LENGTH_OF_RGB = 3;
+    private static final int LENGTH_OF_ARGB = 4;
+    private static final int LENGTH_OF_RRGGBB = 6;
+    private static final int LENGTH_OF_AARRGGBB = 8;
+
+    private static final int HEX = 16;
+
     static
     {
         COLOR_PATTERN = Pattern.compile("^#?(([0-9a-fA-F]){3,4}|([0-9a-fA-F]{2}){3,4})$");
         HEX_PATTERN = Pattern.compile("^[0-9a-fA-F]{1,2}$");
     }
 
+    /**
+     * merge int value of primary colors.
+     * 
+     * @param r
+     *            red
+     * @param g
+     *            green
+     * @param b
+     *            blue
+     * @return 0xFFRRGGBB
+     */
     public static int toIntColor(int r, int g, int b)
     {
-        return toIntColor(r, g, b, 0xff);
+        return toIntColor(r, g, b, 0xFF);
     }
 
+    /**
+     * merge int value of primary colors and alpha.
+     * 
+     * @param r
+     *            red
+     * @param g
+     *            green
+     * @param b
+     *            blue
+     * @param a
+     *            alpha
+     * @return 0xAARRGGBB
+     */
     public static int toIntColor(int r, int g, int b, int a)
     {
         int color = b;
@@ -99,12 +131,11 @@ public class ColorUtils
     @Nullable
     public static Color tryParseColor(String colorString)
     {
-        if (colorString == null || !isColorString(colorString))
+        if (isNull(colorString) || !isColorString(colorString))
             return null;
 
         colorString = removeHeaderChar(colorString);
-        final int length = colorString.length();
-        return parseColorInternal(colorString, (length == 4 || length == 8));
+        return createNewColor(colorString, hasAlpha(colorString));
     }
 
     /**
@@ -120,9 +151,9 @@ public class ColorUtils
         checkArgument(isColorString(rgb));
         rgb = removeHeaderChar(checkNotNull(rgb, "Argument 'rgb' must not be null."));
         final int l = rgb.length();
-        checkArgument(l == 3 || l == 6);
+        checkArgument(l == LENGTH_OF_RGB || l == LENGTH_OF_RRGGBB);
 
-        return parseColorInternal(rgb, false);
+        return createNewColor(rgb, false);
     }
 
     /**
@@ -137,9 +168,9 @@ public class ColorUtils
     {
         argb = removeHeaderChar(checkNotNull(argb, "Argument 'argb' must not be null."));
         final int l = argb.length();
-        checkArgument(l == 4 || l == 8);
+        checkArgument(l == LENGTH_OF_ARGB || l == LENGTH_OF_AARRGGBB);
 
-        return parseColorInternal(argb, true);
+        return createNewColor(argb, true);
     }
 
     @Nonnull
@@ -155,55 +186,10 @@ public class ColorUtils
     }
 
     @Nonnull
-    private static Color parseColorInternal(@Nonnull String colorString, boolean hasalpha)
+    private static Color createNewColor(@Nonnull String colorString, boolean hasalpha)
     {
-        final int loopCount = hasalpha ? 4 : 3;
-        final int length = colorString.length(); // 3, 4, 6 or 8
-        int delta;
-
-        if (length == loopCount)
-            delta = 1;
-        else if (length == loopCount * 2)
-            delta = 2;
-        else
-            throw new InternalError("unreachable code.");
-
-        final int[] color = new int[loopCount];
-        int cursor = 0;
-
-        for (int i = 0; i < loopCount; i++)
-        {
-            final int endIndex = cursor + delta;
-            String s = colorString.substring(cursor, endIndex);
-            cursor = endIndex;
-
-            if (s.length() == 1)
-            {
-                s = s + s;
-            }
-
-            if (HEX_PATTERN.matcher(s).matches())
-            {
-                color[i] = Integer.parseInt(s, 16);
-            }
-            else
-            {
-                LOG.warning("illegal color value. (%s) replace to FF", s);
-                color[i] = 255;
-            }
-        }
-
-        Color ret;
-
-        if (hasalpha)
-        {
-            ret = new Color(color[1], color[2], color[3], color[0]);
-        }
-        else
-        {
-            ret = new Color(color[0], color[1], color[2]);
-        }
-
+        final int[] colorValueStack = parseColorString(colorString, hasalpha ? LENGTH_OF_ARGB : LENGTH_OF_RGB);
+        final Color ret = newColor(colorValueStack, hasalpha);
         LOG.debug("color parsed. (%s)", ret);
         return ret;
     }
@@ -232,7 +218,7 @@ public class ColorUtils
     @Nonnull
     public static String toString(Color color, boolean hasalpha)
     {
-        final StringBuilder sb = new StringBuilder(hasalpha ? 8 : 6);
+        final StringBuilder sb = new StringBuilder(hasalpha ? LENGTH_OF_AARRGGBB : LENGTH_OF_RRGGBB);
 
         if (hasalpha)
             sb.append(hexToString(color.getAlpha()));
@@ -246,7 +232,7 @@ public class ColorUtils
 
     private static boolean isColorString(String colorString)
     {
-        if (colorString == null)
+        if (isNull(colorString))
             return false;
 
         return COLOR_PATTERN.matcher(colorString).matches();
@@ -255,5 +241,61 @@ public class ColorUtils
     private static String hexToString(int hexInt)
     {
         return Strings.padStart(Integer.toHexString(hexInt), 2, '0');
+    }
+
+    private static boolean hasAlpha(String colorString)
+    {
+        final int length = colorString.length();
+        return (length == LENGTH_OF_ARGB || length == LENGTH_OF_AARRGGBB);
+    }
+
+    private static int[] parseColorString(String colorString, int loopCount)
+    {
+        final int length = colorString.length(); // 3, 4, 6 or 8
+        final int delta = computeDelta(length, loopCount);
+
+        final int[] colorValueStack = new int[loopCount];
+
+        int cursor = 0;
+
+        for (int i = 0; i < loopCount; i++)
+        {
+            final int endIndex = cursor + delta;
+            String s = colorString.substring(cursor, endIndex);
+            cursor = endIndex;
+
+            if (s.length() == 1)
+                s = s.concat(s); // avoid using StringBuilder
+
+            if (HEX_PATTERN.matcher(s).matches())
+            {
+                colorValueStack[i] = Integer.parseInt(s, HEX);
+                continue;
+            }
+
+            LOG.warning("illegal color value. (%s) replace to FF", s);
+            colorValueStack[i] = 0xFF;
+        }
+
+        return colorValueStack;
+    }
+
+    private static int computeDelta(int length, int loopCount)
+    {
+        if (length == loopCount)
+            return 1;
+
+        if (length == loopCount + loopCount)
+            return 2;
+
+        throw new InternalError("unreachable code.");
+    }
+
+    private static Color newColor(int[] colorValues, boolean hasalpha)
+    {
+        if (hasalpha)
+            return new Color(colorValues[1], colorValues[2], colorValues[3], colorValues[0]);
+
+        return new Color(colorValues[0], colorValues[1], colorValues[2]);
     }
 }
