@@ -9,7 +9,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.util;
 
 import static com.google.common.base.Preconditions.*;
 
