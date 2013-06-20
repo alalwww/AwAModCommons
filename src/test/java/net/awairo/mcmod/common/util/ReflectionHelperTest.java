@@ -11,7 +11,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.util;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -30,7 +30,8 @@ public class ReflectionHelperTest
 {
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#findClass(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#findClass(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testFindClass()
@@ -42,7 +43,7 @@ public class ReflectionHelperTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
      * のためのテスト・メソッド。
      */
     @Test
@@ -59,7 +60,7 @@ public class ReflectionHelperTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
      * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
@@ -69,7 +70,7 @@ public class ReflectionHelperTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#getFieldValue(java.lang.Class, java.lang.Object, int)}
      * のためのテスト・メソッド。
      */
     @Test(expected = IndexOutOfBoundsException.class)
@@ -79,7 +80,8 @@ public class ReflectionHelperTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#getMethod(java.lang.Class, java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#getMethod(java.lang.Class, java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testGetMethod()
@@ -89,7 +91,7 @@ public class ReflectionHelperTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ReflectionHelper#invoke(java.lang.reflect.Method, java.lang.Object, java.lang.Object...)}
+     * {@link net.awairo.mcmod.common.util.ReflectionHelper#invoke(java.lang.reflect.Method, java.lang.Object, java.lang.Object...)}
      * のためのテスト・メソッド。
      */
     @Test

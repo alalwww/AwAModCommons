@@ -11,7 +11,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.util;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -19,8 +19,6 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 
 import org.junit.Test;
-
-import net.awairo.mcmod.common.ColorUtils;
 
 /**
  * ColorUtilsTest.
@@ -30,7 +28,8 @@ import net.awairo.mcmod.common.ColorUtils;
 public class ColorUtilsTest
 {
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#toIntColor(byte)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#toIntColor(byte)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testToIntColor()
@@ -42,7 +41,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#toByteColor(int)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#toByteColor(int)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testToByteColor()
@@ -55,7 +55,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#tryParseColor(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#tryParseColor(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testTryParseColor()
@@ -68,7 +69,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorRGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorRGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testParseColorRGB()
@@ -78,7 +80,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorRGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorRGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorRGB_IAE1() throws Exception
@@ -87,7 +90,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorRGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorRGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorRGB_IAE2() throws Exception
@@ -96,7 +100,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorRGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorRGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorRGB_IAE3() throws Exception
@@ -105,7 +110,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorRGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorRGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorRGB_IAE4() throws Exception
@@ -114,7 +120,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorARGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorARGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testParseColorARGB()
@@ -124,7 +131,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorARGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorARGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorARGB_IAE1() throws Exception
@@ -133,7 +141,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorARGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorARGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorARGB_IAE2() throws Exception
@@ -142,7 +151,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorARGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorARGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorARGB_IAE3() throws Exception
@@ -151,7 +161,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#parseColorARGB(java.lang.String)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#parseColorARGB(java.lang.String)}
+     * のためのテスト・メソッド。
      */
     @Test(expected = IllegalArgumentException.class)
     public void testParseColorARGB_IAE4() throws Exception
@@ -160,7 +171,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#toString(java.awt.Color)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#toString(java.awt.Color)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testToStringColor()
@@ -170,7 +182,8 @@ public class ColorUtilsTest
     }
 
     /**
-     * {@link net.awairo.mcmod.common.ColorUtils#toString(java.awt.Color, boolean)} のためのテスト・メソッド。
+     * {@link net.awairo.mcmod.common.util.ColorUtils#toString(java.awt.Color, boolean)}
+     * のためのテスト・メソッド。
      */
     @Test
     public void testToStringColorBoolean()
