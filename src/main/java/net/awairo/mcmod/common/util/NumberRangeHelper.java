@@ -14,10 +14,9 @@ package net.awairo.mcmod.common.util;
 import static com.google.common.base.Preconditions.*;
 
 /**
- * 範囲を持った数値ヘルパー.
+ * 範囲を持った数値を生成するヘルパークラス.
  * 
  * @author alalwww
- * 
  */
 public final class NumberRangeHelper
 {
