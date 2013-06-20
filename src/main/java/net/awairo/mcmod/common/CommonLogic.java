@@ -11,14 +11,14 @@
 
 package net.awairo.mcmod.common;
 
+import static com.google.common.base.Preconditions.*;
+
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * 汎用ロジックユーティリティ.
@@ -31,28 +31,12 @@ public final class CommonLogic
     {
     }
 
-    public static void handlePreInitializeEvent(IAwAMod mod, FMLPreInitializationEvent event)
-    {
-        // none
-    }
-
-    public static void handleViolationEvent(IAwAMod mod, FMLFingerprintViolationEvent event)
-    {
-        if (event.isDirectory && Env.develop())
-            return;
-
-        throw new VerifyError(String.format(
-                "This MOD file has been corrupted or tampered! Re-download the latest mod, please. (%s)",
-                event.source.getName()));
-    }
-
     @Nonnull
     public static String getModId(@Nonnull Object modInstance)
     {
         final Mod mod = modInstance.getClass().getAnnotation(Mod.class);
-
-        if (isNull(mod) || Strings.isNullOrEmpty(mod.modid()))
-            throw new IllegalArgumentException();
+        checkArgument(isNotNull(mod), "modInstance must be annotated class for the Mod annotation.");
+        checkState(!Strings.isNullOrEmpty(mod.modid()), "the modid must not be null or empty strings.");
 
         return mod.modid();
     }
@@ -64,7 +48,7 @@ public final class CommonLogic
 
     public static boolean isNotNull(Object object)
     {
-        return !isNull(object);
+        return object != null;
     }
 
     public static boolean equal(Object a, Object b)
