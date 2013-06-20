@@ -22,18 +22,13 @@ import javax.annotation.Nonnull;
 import net.awairo.mcmod.common.log.Logger;
 
 /**
- * 共通処理用ロガー.
+ * AwAModCommons共通処理用ロガー.
  * 
  * @author alalwww
  */
-final class CommonLogger extends Logger
+public final class CommonLogger extends Logger
 {
-    private static final CommonLogger INSTANCE;
-
-    static
-    {
-        INSTANCE = new CommonLogger();
-    }
+    private static final CommonLogger INSTANCE = new CommonLogger();
 
     /**
      * Constructor.
@@ -52,7 +47,7 @@ final class CommonLogger extends Logger
      * @return ロガー
      */
     @Nonnull
-    static Logger getLogger()
+    public static Logger getLogger()
     {
         return INSTANCE;
     }
