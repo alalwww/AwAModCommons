@@ -19,6 +19,8 @@ import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 
+import net.awairo.mcmod.common.log.Logger;
+
 /**
  * 共通処理用ロガー.
  * 

@@ -11,6 +11,8 @@
 
 package net.awairo.mcmod.common;
 
+import net.awairo.mcmod.common.log.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.FingerprintWarning;
 import cpw.mods.fml.common.Mod.Init;

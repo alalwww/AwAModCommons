@@ -11,9 +11,10 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.log;
 
 import static com.google.common.base.Preconditions.*;
+import static net.awairo.mcmod.common.CommonLogic.*;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;
@@ -25,6 +26,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
+
+import net.awairo.mcmod.common.Env;
 
 /**
  * ロガー.
@@ -81,14 +84,14 @@ public class Logger
         final String modid = modEnv.getModId();
         Logger logger = PUBLISHED_LOGGERS.get(modid);
 
-        if (logger != null)
+        if (isNotNull(logger))
             return logger;
 
         synchronized (Logger.class)
         {
             logger = PUBLISHED_LOGGERS.get(modid);
 
-            if (logger != null)
+            if (isNotNull(logger))
                 return logger;
 
             return new Logger(modEnv);
@@ -101,7 +104,7 @@ public class Logger
         {
             final Logger old = PUBLISHED_LOGGERS.put(logger.modId, logger);
 
-            if (old == null)
+            if (isNull(old))
                 return logger;
 
             return logger;
@@ -194,7 +197,7 @@ public class Logger
 
         logger.setLevel(level);
 
-        if (handler != null)
+        if (isNotNull(handler))
             handler.setLevel(level);
     }
 
@@ -431,27 +434,28 @@ public class Logger
         if (!Env.develop() && !canLogging(level))
             return;
 
-        final String message = (args != null && args.length > 0) ? String.format(format, args) : format;
+        final String message = (isNotNull(args) && args.length > 0) ? String.format(format, args) : format;
 
         if (Env.develop() || isLesserThanInfo(level) || logger.getUseParentHandlers())
         {
             log(level, message, e);
+            return;
         }
-        else
-        {
-            logger.setUseParentHandlers(true);
-            log(level, message, e);
-            logger.setUseParentHandlers(false);
-        }
+
+        logger.setUseParentHandlers(true);
+        log(level, message, e);
+        logger.setUseParentHandlers(false);
     }
 
     private void log(Level level, String message, Throwable e)
     {
-        if (e == null)
+        if (isNull(e))
+        {
             logger.log(level, message);
+            return;
+        }
 
-        else
-            logger.log(level, message, e);
+        logger.log(level, message, e);
     }
 
     /**
@@ -475,12 +479,12 @@ public class Logger
      */
     private static Level getLogLevel(java.util.logging.Logger logger)
     {
-        if (logger == null)
+        if (isNull(logger))
             return Level.INFO;
 
         final Level level = logger.getLevel();
 
-        if (level == null)
+        if (isNull(level))
             return getLogLevel(logger.getParent());
 
         return level;

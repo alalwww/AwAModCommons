@@ -11,7 +11,9 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.log;
+
+import static net.awairo.mcmod.common.CommonLogic.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -19,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -28,10 +32,18 @@ import com.google.common.base.Strings;
  * 
  * @author alalwww
  */
+@NotThreadSafe
 final class LogFormatter extends Formatter
 {
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS ");
+
+    /**
+     * Constructor.
+     */
+    protected LogFormatter()
+    {
+    }
 
     @Override
     public String format(LogRecord record)
@@ -73,7 +85,7 @@ final class LogFormatter extends Formatter
 
     private static void appendLoggerName(StringBuilder msg, String loggerName)
     {
-        if (loggerName == null || loggerName.length() <= 0)
+        if (isNull(loggerName) || loggerName.length() <= 0)
             return;
 
         final int index = loggerName.lastIndexOf(".");
@@ -85,7 +97,7 @@ final class LogFormatter extends Formatter
 
     private static void appendError(StringBuilder msg, Throwable throwable)
     {
-        if (throwable == null)
+        if (isNull(throwable))
             return;
 
         final StringWriter output = new StringWriter();

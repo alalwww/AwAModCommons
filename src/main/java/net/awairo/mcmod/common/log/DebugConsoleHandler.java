@@ -9,7 +9,7 @@
  * ライセンスの内容は次のサイトを確認してください。 http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 
-package net.awairo.mcmod.common;
+package net.awairo.mcmod.common.log;
 
 import java.io.PrintStream;
 import java.util.logging.LogRecord;
@@ -19,11 +19,10 @@ import java.util.logging.StreamHandler;
  * デバッグログのコンソール出力ハンドラ.
  * 
  * @author alalwww
- * 
  */
-public class DebugConsoleHandler extends StreamHandler
+final class DebugConsoleHandler extends StreamHandler
 {
-    DebugConsoleHandler(PrintStream err)
+    protected DebugConsoleHandler(PrintStream err)
     {
         super(err, new LogFormatter());
     }

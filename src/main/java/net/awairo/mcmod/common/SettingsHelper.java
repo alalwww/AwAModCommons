@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Throwables;
 
+import net.awairo.mcmod.common.log.Logger;
+
 import net.minecraft.client.Minecraft;
 
 /**

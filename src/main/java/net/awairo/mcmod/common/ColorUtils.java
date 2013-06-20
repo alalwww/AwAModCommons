@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Strings;
 
+import net.awairo.mcmod.common.log.Logger;
+
 /**
  * RGB形式またはRGBA形式の文字列を Color にパースします.
  * 
